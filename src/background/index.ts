@@ -10,14 +10,17 @@ chrome.runtime.onMessage.addListener(
 
     const tabId = sender.tab.id;
 
-    if (message.type === 'MUTE_TAB') {
-      chrome.tabs.update(tabId, { muted: true }).catch((err) => {
-        console.error('Failed to mute tab:', err);
-      });
-    } else if (message.type === 'UNMUTE_TAB') {
-      chrome.tabs.update(tabId, { muted: false }).catch((err) => {
-        console.error('Failed to unmute tab:', err);
-      });
+    switch (message.type) {
+      case 'MUTE_TAB':
+        chrome.tabs.update(tabId, { muted: true }).catch((err) => {
+          console.error('Failed to mute tab:', err);
+        });
+        break;
+      case 'UNMUTE_TAB':
+        chrome.tabs.update(tabId, { muted: false }).catch((err) => {
+          console.error('Failed to unmute tab:', err);
+        });
+        break;
     }
   },
 );
